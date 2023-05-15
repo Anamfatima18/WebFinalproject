@@ -1,8 +1,8 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { admin , Student , Teacher } = require("../Models/User");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { admin} from "../Models/User.js";
 
-const registerAdmin = async (req, res) => {
+export const registerAdmin = async (req, res) => {
   try {
     const { name, email, password, phone } = req.body;
     const adminExists = await admin.findOne({ email });
@@ -34,7 +34,7 @@ const registerAdmin = async (req, res) => {
 
 
     // Delete Admin function
-    const deleteAdmin = async (req, res) => {
+    export const deleteAdmin = async (req, res) => {
       try {
         const { adminId } = req.body;
         const foundAdmin = await admin.findOne({ adminId });
@@ -54,7 +54,7 @@ const registerAdmin = async (req, res) => {
     
 
 // View All Admin function
-const viewAllAdmins = async (req, res) => {
+export const viewAllAdmins = async (req, res) => {
   try {
     //const allAdmins = await admin.find({}, { password: 0, _id: 0, __v: 0 });
 
@@ -75,10 +75,36 @@ const viewAllAdmins = async (req, res) => {
     res.status(500).send(e);
   }
 };
+export const loginAdmin = async (req, res) => {
+  try {
+      const { email, password} = req.body;
 
+      let user;
+      
+          user = await admin.findOne({ email });
+      
+
+      if (!user) {
+          return res.status(400).json({ error: "Admin not found" });
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+          return res.status(400).json({ error: "Invalid credentials" });
+      }
+
+      const token = jwt.sign({ _id: user._id }, "ecret");
+
+      res.json({ user, token });
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Server error");
+    }
+};
 
 // Update Admin function
-const updateAdmin = async (req, res) => {
+export const updateAdmin = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, email, password, phone } = req.body;
@@ -143,40 +169,22 @@ const updateAdmin = async (req, res) => {
 //       res.status(500).send("Server error");
 //     }
 //   };
-const loginAdmin = async (req, res) => {
-    try {
-        const { email, password} = req.body;
 
-        let user;
-        
-            user = await admin.findOne({ email });
-        
-
-        if (!user) {
-            return res.status(400).json({ error: "User not found" });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            return res.status(400).json({ error: "Invalid credentials" });
-        }
-
-        const token = jwt.sign({ _id: user._id }, "Secret");
-
-        res.json({ user, token });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Server error");
-    }
-};
 
   
 
-module.exports = {
-  registerAdmin,
-  updateAdmin,
-  deleteAdmin,
-  viewAllAdmins,
-  loginAdmin,
-};
+// module.exports = {
+//   registerAdmin,
+//   updateAdmin,
+//   deleteAdmin,
+//   viewAllAdmins,
+//   loginAdmin,
+// };
+// export {
+//   registerAdmin,
+//   updateAdmin,
+//   deleteAdmin,
+//   viewAllAdmins,
+//   loginAdmin,
+// };
+

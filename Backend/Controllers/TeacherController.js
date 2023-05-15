@@ -1,10 +1,11 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const {  Teacher } = require("../Models/User");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { Teacher } from "../Models/User.js";
 
-const registerTeacher = async (req, res) => {
+
+export const registerTeacher = async (req, res) => {
     try {
-        const { name, email, password, subject, phone } = req.body;
+        const { name, email, password, phone } = req.body;
         const teacherExists = await Teacher.findOne({ email });
     
         if (teacherExists) {
@@ -20,7 +21,6 @@ const registerTeacher = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            subject,
             phone,
             TeacherId: newTeacherId // Save the new teacher ID to the database
         });
@@ -32,7 +32,7 @@ const registerTeacher = async (req, res) => {
     }
 };
 
-  const loginTeacher = async (req, res) => {
+  export const loginTeacher = async (req, res) => {
     try {
         const { email, password} = req.body;
 
@@ -61,7 +61,7 @@ const registerTeacher = async (req, res) => {
 };
 
 
-const viewAllTeacher = async (req, res) => {
+export const viewAllTeacher = async (req, res) => {
     try {
       const allTeacher = await Teacher.find({}, { password: 0 }); // Excludes the password field from the query result
   
@@ -70,8 +70,8 @@ const viewAllTeacher = async (req, res) => {
       }
   
       const TeacherDetails = allTeacher.map((Teacher) => {
-        const { name, email, phone, _id ,TeacherId, subject } = Teacher;
-        return { _id, name, email, phone, TeacherId, subject };
+        const { name, email, phone, _id ,TeacherId} = Teacher;
+        return { _id, name, email, phone, TeacherId};
       });
   
       res.status(200).json(TeacherDetails);
@@ -80,7 +80,7 @@ const viewAllTeacher = async (req, res) => {
     }
   };
   
-  const deleteTeacher = async (req, res) => {
+  export const deleteTeacher = async (req, res) => {
     try {
       const { TeacherId } = req.body;
       const foundTeacher = await Teacher.findOne({ TeacherId });
@@ -97,7 +97,35 @@ const viewAllTeacher = async (req, res) => {
       res.status(500).json({ message: "Error deleting Teacher" });
     }
   };
-
-  module.exports={
-    registerTeacher , loginTeacher , viewAllTeacher , deleteTeacher
-}
+  export const updateTeacher = async (req, res) => {
+    const { TeacherId } = req.params;
+  
+    try {
+      const teacher = await Teacher.findOneAndUpdate(
+        { TeacherId },
+        req.body,
+        { new: true }
+      );
+  
+      if (!teacher) {
+        return res.status(404).json({ error: 'Teacher not found' });
+      }
+  
+      return res.status(200).json({
+        message: 'Teacher updated successfully',
+        teacher,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Error updating teacher' });
+    }
+  };
+  
+  // export = {
+  //   registerTeacher,
+  //   loginTeacher,
+  //   viewAllTeacher,
+  //   deleteTeacher,
+  //   updateTeacher,
+  // };
+  

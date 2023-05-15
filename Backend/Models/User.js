@@ -1,4 +1,4 @@
-const mongoose=require('mongoose')
+import mongoose from 'mongoose';
 
 
 const adminSchema = new mongoose.Schema({
@@ -79,7 +79,29 @@ const adminSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    subject: {
+    phone: {
+      type: String,
+      required: true
+    },
+   
+  })
+
+  const CourseDesignerSchema = new mongoose.Schema({
+    CourseDesignerId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
       type: String,
       required: true,
     },
@@ -88,16 +110,18 @@ const adminSchema = new mongoose.Schema({
       required: true
     },
    
-  },{timestamps: true})
-  const admin = mongoose.model('admin', adminSchema);
-  const Student = mongoose.model('Student', studentSchema);
-  const Teacher = mongoose.model('Teacher', teacherSchema);
+  })
+  export const admin = mongoose.model('admin', adminSchema);
+  export const Student = mongoose.model('Student', studentSchema);
+  export const Teacher = mongoose.model('Teacher', teacherSchema);
+  export const CourseDesigner = mongoose.model('CourseDesigner' , CourseDesignerSchema)
   
-  module.exports = {
-    Student,
-    Teacher,
-    admin,
-  };
+  // module.exports = {
+  //   Student,
+  //   Teacher,
+  //   admin,
+  //   CourseDesigner,
+  // };
   
   
 

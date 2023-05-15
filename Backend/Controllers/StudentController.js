@@ -1,9 +1,10 @@
 
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { Student  } = require("../Models/User");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { Student } from "../Models/User.js";
 
-const registerStudent = async (req, res) => {
+
+export const registerStudent = async (req, res) => {
     try {
       const { name, email, password, batch, phone } = req.body;
       const studentExists = await Student.findOne({ email });
@@ -33,7 +34,7 @@ const registerStudent = async (req, res) => {
     }
   };
   
-  const loginStudent = async (req, res) => {
+  export const loginStudent = async (req, res) => {
     try {
         const { email, password} = req.body;
 
@@ -62,7 +63,7 @@ const registerStudent = async (req, res) => {
 };
 
 // Delete Admin function
-const deleteStudent = async (req, res) => {
+export const deleteStudent = async (req, res) => {
     try {
       const { StudentId } = req.body;
       const foundStudent = await Student.findOne({ StudentId });
@@ -83,7 +84,7 @@ const deleteStudent = async (req, res) => {
 
 // View All Admin function
 
-const viewAllStudents = async (req, res) => {
+export const viewAllStudents = async (req, res) => {
     try {
       const allStudents = await Student.find({}, { password: 0 }); // Excludes the password field from the query result
   
@@ -103,9 +104,74 @@ const viewAllStudents = async (req, res) => {
   };
   
   
-
-
-
-module.exports={
-    registerStudent , loginStudent , deleteStudent , viewAllStudents
-}
+  // const forgotPasswordStudent = async (req, res) => {
+  //   try {
+  //     const { email } = req.body;
+  //     const student = await Student.findOne({ email });
+  
+  //     if (!student) {
+  //       return res.status(400).json({ error: "Student not found" });
+  //     }
+  
+  //     const token = jwt.sign({ _id: student._id }, process.env.RESET_PASSWORD_KEY, {
+  //       expiresIn: "20m",
+  //     });
+  
+  //     const mailData = {
+  //       to: email,
+  //       from: process.env.EMAIL_FROM,
+  //       subject: "Password Reset Link",
+  //       html: `
+  //         <h1>Please click on the given link to reset your password</h1>
+  //         <p>${process.env.CLIENT_URL}/reset-password/${token}</p>
+  //       `,
+  //     };
+  
+  //     sgMail.send(mailData);
+  
+  //     return res.json({ message: "Email has been sent, kindly follow the instructions" });
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).send("Server error");
+  //   }
+  // };
+  
+  export const updateStudent = async (req, res) => {
+    const { StudentId } = req.params;
+  
+    try {
+      const student = await Student.findOneAndUpdate(
+        { StudentId },
+        req.body,
+        { new: true }
+      );
+  
+      if (!student) {
+        return res.status(404).json({ error: 'Student not found' });
+      }
+  
+      return res.status(200).json({
+        message: 'Student updated successfully',
+        student,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Error updating student' });
+    }
+  };
+  
+  // module.exports = {
+  //   registerStudent,
+  //   loginStudent,
+  //   deleteStudent,
+  //   viewAllStudents,
+  //   updateStudent
+  // };
+  // export = {
+  //   registerStudent,
+  //   loginStudent,
+  //   deleteStudent,
+  //   viewAllStudents,
+  //   updateStudent
+  // };
+  
