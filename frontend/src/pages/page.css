@@ -1,0 +1,166 @@
+
+
+
+.App {
+    background-color: white;
+  }
+  
+  .Auth-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .Auth-form {
+    width: 420px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-radius: 8px;
+    background-color: white;
+  }
+  
+  .Auth-form-content {
+    padding-left: 12%;
+    padding-right: 12%;
+  }
+  
+  .Auth-form-title {
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 24px;
+    color: rgb(34, 34, 34);
+    font-weight: 800;
+  }
+  
+  .table th,
+.table td {
+  border-right: 2px solid #c9c9dc;
+}
+
+.table th:last-child,
+.table td:last-child {
+  border-right: none;
+}
+.table thead {
+    background-color: #4479e4;
+    color: white;
+  }
+  .table {
+    border: 1px solid #dee2e6;
+  }
+  
+  .table th,
+  .table td {
+    border: 1px solid #dee2e6;
+  }
+  .add-student-form  .form-outline{
+    max-width: 400px;
+  }
+  
+  .add-student-form .form-outline {
+    height: 30px;
+  }
+  
+  
+  /* .add-student-form .form-outline {
+    display: flex;
+    align-items: center;
+    height: 60px;
+  }
+  
+  .add-student-form .form-outline i {
+    margin-right: 10px;
+    align-self: flex-start;
+  } */
+  .add-student-form .form-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .add-student-form .form-group label {
+    margin-right: 10px;
+  }
+  
+  .add-student-form .form-group i {
+    margin-right: 5px;
+  }
+  
+  .student {
+    display: flex;
+  }
+  
+  .content-container {
+    flex: 1;
+    margin-left: 200px; /* Width of the sidebar */
+    padding: 20px;
+  }
+  
+  .search-container {
+    margin-bottom: 20px;
+  }
+  
+  .table-container {
+    margin-bottom: 20px;
+  }
+  .custom-button {
+    background-color: #1e3f66;
+  }
+  .margin-left{
+    margin-left: 20px !important;
+   background-color: #1e3f66;
+   border-radius: 5px;
+   padding: 0.25 0.5 0.25 0.5 ;
+   color: white;
+   border: none;
+}
+
+.button-row{
+  width: 100px;
+
+}
+
+
+
+.container {
+  
+  background-size: cover;
+  background-position: center;
+  height: 91.55vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container {
+  width: 35%;
+  background-color:#1e3f66; /* Adjust the opacity value here */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  padding-top: 0%;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  color: #ccc;
+}
+
+input[type='text'],
+textarea {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#addCourse{
+  background-color: grey;
+  padding: 10px 20px;
+  margin-left: 150px;
+  margin-top: 10px;
+  border-radius: 7px;
+}

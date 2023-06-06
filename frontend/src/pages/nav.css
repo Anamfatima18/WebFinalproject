@@ -1,0 +1,258 @@
+
+/* .side-nav-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 200px;
+    background-color: #4479e4;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+  }
+  
+  .nav-heading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .nav-heading h2 {
+    font-size: 18px;
+    margin-left: 10px;
+  }
+  
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    margin-top: 5px;
+    padding: 10px 0;
+  }
+  
+  .side-nav-container hr {
+    border: none;
+    border-top: 1px solid white;
+    width: 80%;
+    margin: 5px 0;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown-item {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f1f1f1;
+  }
+   */
+   /* .side-nav-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 200px;
+    background-color: #1E3F66;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+  }
+  
+  .nav-heading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .nav-heading h2 {
+    font-size: 18px;
+    margin-left: 10px;
+  }
+  
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .button-with-sub-buttons {
+    position: relative;
+  }
+  
+  .main-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  
+  .dropdown-icon {
+    margin-left: 5px;
+  }
+  
+  .rotate {
+    transform: rotate(180deg);
+  }
+  
+  .sub-buttons {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    margin-top: 5px;
+    padding: 10px 0;
+  }
+  
+  .show {
+    display: block;
+  }
+  
+  .sub-button {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .sub-button:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .side-nav-container hr {
+    border: none;
+    border-top: 1px solid white;
+    width: 80%;
+    margin: 5px 0;
+  }
+   */
+
+   .side-nav-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 200px;
+    background-color: #1E3F66;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+  }
+  
+  .nav-heading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .nav-heading h2 {
+    font-size: 18px;
+    margin-left: 10px;
+  }
+  
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .button-with-sub-buttons {
+    position: relative;
+  }
+  
+  .main-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  
+  .dropdown-icon {
+    margin-left: 5px;
+  }
+  
+  .rotate {
+    transform: rotate(180deg);
+  }
+  
+  .sub-buttons {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    margin-top: 5px;
+    padding: 10px 0;
+  }
+  
+  .show {
+    display: block;
+  }
+  
+  .sub-button {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .sub-button:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .side-nav-container hr {
+    border: none;
+    border-top: 1px solid white;
+    width: 80%;
+    margin: 5px 0;
+  }
+  

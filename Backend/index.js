@@ -43,10 +43,10 @@ app.use(express.json());
 app.use(cors());
 
 import User from "./Routes/User.js";
-app.use("/api/user", User);
+app.use("/api", User);
 
-app.listen(3000, () => {
-console.log("Server started on port 3000");
+app.listen(4000, () => {
+console.log("Server started on port 4000");
 });
 
 

@@ -1,6 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { Teacher } from "../Models/User.js";
+//import { Teacher } from "../Models/User.js";
+//import { Student } from "../Models/User.js";
+import { Teacher } from '../Models/Teacher.js';
 
 
 export const registerTeacher = async (req, res) => {
@@ -12,11 +14,33 @@ export const registerTeacher = async (req, res) => {
             return res.status(400).send({ error: "Teacher with this email already exists" });
         }
 
-        const lastTeacher = await Teacher.findOne({}, {}, { sort: { 'createdAt' : -1 } }); // Get the most recently added teacher
-        const lastTeacherId = lastTeacher ? parseInt(lastTeacher.teacherId.substring(1)) : 0; // Extract the teacher ID from the most recently added teacher
-        const newTeacherId = "T" + (lastTeacherId + 1).toString().padStart(4, "0"); // Generate the new teacher ID
-        
-        const hashedPassword = await bcrypt.hash(password, 8);
+        // const lastTeacher = await Teacher.findOne({}, {}, { sort: { 'createdAt' : -1 } }); // Get the most recently added teacher
+        // const lastTeacherId = lastTeacher ? parseInt(lastTeacher.TeacherId.substring(1)) : 0; // Extract the teacher ID from the most recently added teacher
+        // const newTeacherId = "T" + (lastTeacherId + 1).toString().padStart(4, "0"); // Generate the new teacher ID
+            // console.log(lastTeacher);
+            // console.log(lastTeacherId);
+            // console.log(newTeacherId);
+              //  const lastTeacher = await Teacher.findOne({}, {}, { sort: { 'createdAt': -1 } });
+              //   const lastTeacherId = lastTeacher ? parseInt(lastTeacher.TeacherId.slice(1), 10) : 0;
+              //   const newTeacherId = 'T' + (lastTeacherId + 1).toString().padStart(4, '0');
+              const lastTeacher = await Teacher.findOne({}, {}, { sort: { 'TeacherId': -1 } });
+              let newTeacherId;
+              
+              if (lastTeacher) {
+                const lastTeacherId = lastTeacher.TeacherId;
+                const lastTeacherIdNumber = parseInt(lastTeacherId.slice(1), 10);
+                const newTeacherIdNumber = lastTeacherIdNumber + 1;
+                newTeacherId = 'T' + newTeacherIdNumber.toString().padStart(4, '0');
+              } else {
+                newTeacherId = 'T0001'; // Default ID for the first teacher
+              }
+              
+              console.log(newTeacherId);
+              
+              
+console.log(newTeacherId);
+
+       const hashedPassword = await bcrypt.hash(password, 8);
         const teacher = new Teacher({
             name,
             email,
@@ -51,7 +75,7 @@ export const registerTeacher = async (req, res) => {
             return res.status(400).json({ error: "Invalid credentials" });
         }
 
-        const token = jwt.sign({ _id: user._id }, "Secret");
+        const token = jwt.sign({ _id: user._id }, "secret");
 
         res.json({ user, token });
     } catch (error) {

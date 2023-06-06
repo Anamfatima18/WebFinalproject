@@ -93,8 +93,9 @@ export const loginAdmin = async (req, res) => {
       if (!isMatch) {
           return res.status(400).json({ error: "Invalid credentials" });
       }
+      const expiresIn = '1d';
 
-      const token = jwt.sign({ _id: user._id }, "ecret");
+      const token = jwt.sign({ _id: user._id }, "secret" , { expiresIn });
 
       res.json({ user, token });
   } catch (error) {
