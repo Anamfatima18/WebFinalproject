@@ -7,7 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import SideNavBar from './navbar';
 import TopNavBar from './topnavbar';
 
-const UpdateStudentContainer = styled('div')({
+const UpdateTeacherContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -22,10 +22,10 @@ const ContentContainer = styled('div')({
   backgroundColor: 'white',
   padding: '40px',
   borderRadius: '8px',
-  width: '500px', // Adjust the width as desired
-  border: '2px solid #1e3f66', // Add border color
-  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Add box shadow
-  marginTop: '20px', // Add margin to separate the form from the navigation bar
+  width: '500px',
+  border: '2px solid #1e3f66',
+  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  marginTop: '20px',
 });
 
 const FormInput = styled('div')({
@@ -33,37 +33,37 @@ const FormInput = styled('div')({
   width: '100%',
 });
 
-const UpdateStudent = () => {
+const UpdateTeacher = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [batch, setBatch] = useState('');
+//   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchStudent = async () => {
+    const fetchTeacher = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:4000/api/student/viewAll/${id}`, {
+        const response = await axios.get(`http://localhost:4000/api/teacher/viewAll/${id}`, {
           headers: {
             token: token,
           },
         });
 
-        const { name, email, phone, batch } = response.data;
+        const { name, email, phone} = response.data;
         setName(name);
         setEmail(email);
         setPhone(phone);
-        setBatch(batch);
+        // setPassword(password);
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchStudent();
+    fetchTeacher();
   }, [id]);
 
   const handleSubmit = async (e) => {
@@ -71,24 +71,24 @@ const UpdateStudent = () => {
 
     setIsLoading(true);
 
-    const updatedStudent = {
+    const updatedTeacher = {
       name,
       email,
       phone,
-      batch,
+    //   password,
     };
 
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:4000/api/student/update/${id}`, updatedStudent, {
+      await axios.put(`http://localhost:4000/api/teacher/update/${id}`, updatedTeacher, {
         headers: {
           token: token,
         },
       });
 
       setIsLoading(false);
-      navigate('/student');
-      alert('Student updated successfully!');
+      navigate('/teacher');
+      alert('Teacher updated successfully!');
     } catch (error) {
       setIsLoading(false);
       console.error(error);
@@ -96,11 +96,11 @@ const UpdateStudent = () => {
   };
 
   return (
-    <UpdateStudentContainer>
+    <UpdateTeacherContainer>
       <TopNavBar />
       <ContentContainer>
         <Typography variant="h5" align="center" gutterBottom style={{ color: '#1e3f66', fontWeight: 'bold', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
-          Update Student
+          Update Teacher
         </Typography>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
@@ -147,29 +147,15 @@ const UpdateStudent = () => {
               </FormInput>
             </Grid>
             <Grid item xs={12}>
-              <FormInput>
-                <TextField
-                  id="batch"
-                  label="Batch Number"
-                  value={batch}
-                  onChange={(e) => setBatch(e.target.value)}
-                  required
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                />
-              </FormInput>
-            </Grid>
-            <Grid item xs={12}>
               <Button variant="contained" color="primary" type="submit" fullWidth style={{ background: '#1e3f66' }} disabled={isLoading}>
-                {isLoading ? 'Updating...' : 'Update '}
+                {isLoading ? 'Updating...' : 'Update'}
               </Button>
             </Grid>
           </Grid>
         </form>
       </ContentContainer>
-    </UpdateStudentContainer>
+    </UpdateTeacherContainer>
   );
 };
 
-export default UpdateStudent;
+export default UpdateTeacher;

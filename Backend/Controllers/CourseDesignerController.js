@@ -56,7 +56,7 @@ export const viewAllDesigners = async (req, res) => {
   
   export const deleteCourseDesigner = async (req, res) => {
     try {
-      const { CourseDesignerId } = req.body;
+      const { CourseDesignerId } = req.params;
       const foundDesigner = await CourseDesigner.findOne({ CourseDesignerId });
       
       if (!foundDesigner) {

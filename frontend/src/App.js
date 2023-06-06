@@ -23,18 +23,26 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
 import StudentView from './pages/student';
 import AddStudent from './pages/AddStudent';
-import SideNavBar from './pages/navbar';
+// import SideNavBar from './pages/navbar';
 import UpdateStudent from './pages/UpdateStudent';
+import HomePage from './pages/homepage';
+import TeacherView from './pages/teacher';
+import UpdateTeacher from './pages/updateteacher';
+import AddTeacher from './pages/Addteacher';
 const App = () => {
   return (
     <Router>
      
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/home" element={<HomePage/>} />
         <Route path="/student" element={<StudentView />} />
+        <Route path="/teacher" element={<TeacherView />} />
         <Route path="/student/add" element={<AddStudent />} />
+        <Route path="/teacher/add" element={<AddTeacher />} />
         <Route path="/student/update/:id" element={<UpdateStudent/>} />
-        { <Route path="/home" element={<SideNavBar />} /> }
+        <Route path="/teacher/update/:id" element={<UpdateTeacher/>} />
+        
       </Routes>
       
     </Router>

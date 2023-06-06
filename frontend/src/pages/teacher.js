@@ -5,22 +5,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import TopNavBar from './topnavbar';
 
-const StudentView = () => {
-  const [students, setStudents] = useState([]);
+const TeacherView = () => {
+  const [teachers, setTeachers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const handleUpdate = id => {
+    navigate(`/teacher/update/${id}`);
+  };
+
   const handleDelete = async id => {
     try {
-      const confirmDelete = window.confirm('Are you sure you want to delete the student?');
+      const confirmDelete = window.confirm('Are you sure you want to delete the teacher?');
       if (confirmDelete) {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:4000/api/student/delete/${id}`, {
+        await axios.delete(`http://localhost:4000/api/teacher/delete/${id}`, {
           headers: {
             token: token,
           },
         });
-        setStudents(students => students.filter(student => student._id !== id));
-        console.log(`Delete student with ID: ${id}`);
+        setTeachers(teachers => teachers.filter(teacher => teacher._id !== id));
+        console.log(`Delete teacher with ID: ${id}`);
       }
     } catch (error) {
       console.error(error);
@@ -29,42 +33,46 @@ const StudentView = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    const verifyToken = async () => {
+    const fetchTeachers = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/student/viewAll', {
+        const response = await axios.get('http://localhost:4000/api/teacher/viewAll', {
           headers: {
             token: token,
           },
         });
-        setStudents(response.data);
+        setTeachers(response.data);
       } catch (error) {
         console.error(error);
       }
     };
 
-    verifyToken();
+    fetchTeachers();
   }, [handleDelete]);
 
   const handleSearch = e => {
     setSearchQuery(e.target.value);
   };
 
-  const filteredStudents = students.filter(student => {
-    const matchSearchQuery =
-      student.StudentId.includes(searchQuery) ||
-      student.name.toLowerCase().includes(searchQuery.toLowerCase());
+//   const filteredTeachers = teachers.filter(teacher => {
+//     const matchSearchQuery =
+//       teacher.teacherId.includes(searchQuery) ||
+//       teacher.name.toLowerCase().includes(searchQuery.toLowerCase());
 
+//     return matchSearchQuery;
+//   });
+const filteredTeachers = teachers.filter(teacher => {
+    const matchSearchQuery =
+      (teacher.teacherId && teacher.teacherId.includes(searchQuery)) ||
+      (teacher.name && teacher.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  
     return matchSearchQuery;
   });
+  
 
-  const handleUpdate = id => {
-    navigate(`/student/update/${id}`);
-  };
-
- 
+  
 
   return (
-    <div className="student">
+    <div className="teacher">
       <div className="fixed-top">
         <TopNavBar />
       </div>
@@ -73,43 +81,41 @@ const StudentView = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search by Student ID or Name"
+            placeholder="Search by Teacher ID or Name"
             value={searchQuery}
             onChange={handleSearch}
           />
         </div>
         <div className="table-container">
-          <h2>Student List</h2>
+          <h2>Teacher List</h2>
           <table className="table">
             <thead>
               <tr>
-                <th>Student ID</th>
-                <th>Batch</th>
-                <th>Email</th>
+                <th>Teacher ID</th>
                 <th>Name</th>
+                <th>Email</th>
                 <th>Phone</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredStudents.map(student => (
-                <tr key={student._id}>
-                  <td>{student.StudentId}</td>
-                  <td>{student.batch}</td>
-                  <td>{student.email}</td>
-                  <td>{student.name}</td>
-                  <td>{student.phone}</td>
+              {filteredTeachers.map(teacher => (
+                <tr key={teacher._id}>
+                  <td>{teacher.TeacherId}</td>
+                  <td>{teacher.name}</td>
+                  <td>{teacher.email}</td>
+                  <td>{teacher.phone}</td>
                   <td>
                     <button
                       className="margin-left"
-                      onClick={() => handleUpdate(student.StudentId)}
+                      onClick={() => handleUpdate(teacher.TeacherId)}
                     >
                       Update
                     </button>
                     <button
                       className="margin-left"
                       style={{ backgroundColor: '#B90E0A' }}
-                      onClick={() => handleDelete(student.StudentId)}
+                      onClick={() => handleDelete(teacher.TeacherId)}
                     >
                       Delete
                     </button>
@@ -124,4 +130,4 @@ const StudentView = () => {
   );
 };
 
-export default StudentView;
+export default TeacherView;

@@ -37,7 +37,7 @@ import express from "express";
 import {registerAdmin,loginAdmin,deleteAdmin,viewAllAdmins} from "../Controllers/AdminController.js";
 import {registerStudent,deleteStudent,viewAllStudents, updateStudent, viewStudentById} from "../Controllers/StudentController.js";
 //import { registerTeacher } from "../Controllers/TeacherController.js";
-import {registerTeacher,viewAllTeacher,deleteTeacher,updateTeacher} from "../Controllers/TeacherController.js";
+import {registerTeacher,viewAllTeacher,deleteTeacher,updateTeacher, viewTeacherById} from "../Controllers/TeacherController.js";
 import { RegisterCourseDesigner,viewAllDesigners,deleteCourseDesigner, updateCourseDesigner,} from "../Controllers/CourseDesignerController.js";
 import { authorize } from "../Middleware/auth.js";
 const router = express.Router();
@@ -56,8 +56,9 @@ router.put("/student/update/:StudentId", authorize, updateStudent);
 
 router.post("/teacher/register", authorize, registerTeacher);
 router.get("/teacher/viewAll", authorize, viewAllTeacher);
-router.delete("/teacher/delete", authorize, deleteTeacher);
+router.delete("/teacher/delete/:TeacherId", authorize, deleteTeacher);
 router.put("/teacher/update/:TeacherId", authorize, updateTeacher);
+router.get("/teacher/viewAll/:TeacherId", authorize, viewTeacherById);
 
 router.post("/courseDesigner/register", authorize, RegisterCourseDesigner);
 router.get("/courseDesigner/viewAll", authorize, viewAllDesigners);

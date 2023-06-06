@@ -103,10 +103,30 @@ export const viewAllTeacher = async (req, res) => {
       res.status(500).send(e);
     }
   };
+  export const viewTeacherById = async (req, res) => {
+    const { TeacherId } = req.params;
+  
+    try {
+      const teacher = await Teacher.findOne({ TeacherId });
+  
+      if (!teacher) {
+        return res.status(404).json({ message: 'Teacher not found' });
+      }
+  
+      const { name, email, phone, _id  } = teacher;
+      const teacherDetails = { _id, name, email, phone, TeacherId  };
+  
+      res.status(200).json(teacherDetails);
+    } catch (error) {
+      console.error(error); // Log the error for debugging purposes
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+  
   
   export const deleteTeacher = async (req, res) => {
     try {
-      const { TeacherId } = req.body;
+      const { TeacherId } = req.params;
       const foundTeacher = await Teacher.findOne({ TeacherId });
       
       if (!foundTeacher) {

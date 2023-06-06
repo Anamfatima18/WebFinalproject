@@ -16,9 +16,20 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:4000/api/admin/login', { email , password });
       const token = response.data.token;
+      console.log(response);
       // After receiving the token
       console.log(token)
+      const name1= response.data.user.name;
+      const email1 = response.data.user.email;
+      const id1 =response.data.user.adminId;
+      const phone1 = response.data.user.phone;
+       console.log(name1, email1 , phone1 , id1);
       localStorage.setItem('token', token);
+      localStorage.setItem('name', name1);
+      localStorage.setItem('email', email1 );
+      localStorage.setItem('id', id1);
+      localStorage.setItem('phone', phone1);
+      //locatStorage.setItem('name' , )
       setLoginError(false); // Clear login error if it was previously shown
        navigate('/Student'); 
       // Navigate to home page

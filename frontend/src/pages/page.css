@@ -121,6 +121,9 @@
   width: 100px;
 
 }
+.table-container table thead{
+  background-color: #1e3f66;
+}
 
 
 
@@ -163,4 +166,12 @@ textarea {
   margin-left: 150px;
   margin-top: 10px;
   border-radius: 7px;
+}
+.content-container {
+  max-width: 1200px; /* Adjust the maximum width as needed */
+  margin: 0 auto; /* Center the container horizontally */
+  
+    padding-top: 100px; /* Adjust this value as needed to create the desired spacing between the top navbar and the content */
+  
+  
 }
