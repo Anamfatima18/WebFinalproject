@@ -29,6 +29,9 @@ import HomePage from './pages/homepage';
 import TeacherView from './pages/teacher';
 import UpdateTeacher from './pages/updateteacher';
 import AddTeacher from './pages/Addteacher';
+import CourseDesignerView from './pages/CourseDesigner';
+import UpdateCourseDesigner from './pages/updateDesigner';
+import AddCourseDesigner from './pages/AddCourseDesigner';
 const App = () => {
   return (
     <Router>
@@ -37,11 +40,14 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<HomePage/>} />
         <Route path="/student" element={<StudentView />} />
+        <Route path="/CourseDesigner" element={<CourseDesignerView/>} />
         <Route path="/teacher" element={<TeacherView />} />
         <Route path="/student/add" element={<AddStudent />} />
         <Route path="/teacher/add" element={<AddTeacher />} />
+        <Route path="/CourseDesigner/add" element={<AddCourseDesigner/>} />
         <Route path="/student/update/:id" element={<UpdateStudent/>} />
         <Route path="/teacher/update/:id" element={<UpdateTeacher/>} />
+        <Route path="/courseDesigner/update/:id" element={<UpdateCourseDesigner/>} />
         
       </Routes>
       

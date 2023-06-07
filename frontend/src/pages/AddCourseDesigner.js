@@ -1,13 +1,13 @@
-
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Grid } from '@mui/material';
+import { TextField, Button, Typography, Grid, InputAdornment, IconButton } from '@mui/material';
 import { styled } from '@mui/system';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import TopNavBar from './topnavbar';
 
-const AddTeacherContainer = styled('div')({
+const AddCourseDesignerContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -33,13 +33,14 @@ const FormInput = styled('div')({
   width: '100%',
 });
 
-const AddTeacher = () => {
+const AddCourseDesigner = () => {
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -48,7 +49,7 @@ const AddTeacher = () => {
 
     setIsLoading(true);
 
-    const newTeacher = {
+    const newCourseDesigner = {
       name,
       email,
       phone,
@@ -57,32 +58,36 @@ const AddTeacher = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:4000/api/teacher/register', newTeacher, {
+      await axios.post('http://localhost:4000/api/courseDesigner/register', newCourseDesigner, {
         headers: {
           token: token,
         },
       });
 
       setIsLoading(false);
-      navigate('/teacher');
-      alert('Teacher added successfully!');
+      navigate('/CourseDesigner');
+      alert('Course designer added successfully!');
     } catch (error) {
       setIsLoading(false);
       if (error.response && error.response.status === 400) {
-        setError('Teacher with the provided email already exists.'); // Set specific error message for duplicate email
+        setError('Course designer with the provided email already exists.'); // Set specific error message for duplicate email
       } else {
-        setError('Error adding teacher. Please try again.'); // Set generic error message
+        setError('Error adding course designer. Please try again.'); // Set generic error message
       }
       console.error(error);
     }
   };
 
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-    <AddTeacherContainer>
+    <AddCourseDesignerContainer>
       <TopNavBar />
       <ContentContainer>
         <Typography variant="h5" align="center" gutterBottom style={{ color: '#1e3f66', fontWeight: 'bold', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
-          Add Teacher
+          Add Course Designer
         </Typography>
         {error && (
           <Typography variant="body1" align="center" color="error" gutterBottom>
@@ -109,9 +114,7 @@ const AddTeacher = () => {
               <FormInput>
                 <TextField
                   id="email"
-                 
-
- label="Email"
+                  label="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -140,29 +143,35 @@ const AddTeacher = () => {
                 <TextField
                   id="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   variant="outlined"
                   size="small"
                   fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleTogglePassword} edge="end">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </FormInput>
             </Grid>
             <Grid item xs={12}>
               <Button variant="contained" color="primary" type="submit" fullWidth style={{ background: '#1e3f66' }} disabled={isLoading}>
-                {isLoading ? 'Adding...' : 'Add Teacher'}
+                {isLoading ? 'Adding...' : 'Add Course Designer'}
               </Button>
             </Grid>
           </Grid>
         </form>
       </ContentContainer>
-    </AddTeacherContainer>
+    </AddCourseDesignerContainer>
   );
 };
 
-export default AddTeacher;
-
-
-
+export default AddCourseDesigner;

@@ -1,13 +1,13 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Grid } from '@mui/material';
 import { styled } from '@mui/system';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
+import SideNavBar from './navbar';
 import TopNavBar from './topnavbar';
 
-const AddTeacherContainer = styled('div')({
+const UpdateCourseDesignerContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -22,10 +22,10 @@ const ContentContainer = styled('div')({
   backgroundColor: 'white',
   padding: '40px',
   borderRadius: '8px',
-  width: '500px', // Adjust the width as desired
-  border: '2px solid #1e3f66', // Add border color
-  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Add box shadow
-  marginTop: '40px', // Add top margin to separate the form from the top navbar
+  width: '500px',
+  border: '2px solid #1e3f66',
+  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  marginTop: '20px',
 });
 
 const FormInput = styled('div')({
@@ -33,62 +33,72 @@ const FormInput = styled('div')({
   width: '100%',
 });
 
-const AddTeacher = () => {
+const UpdateCourseDesigner = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchCourseDesigner = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`http://localhost:4000/api/coursedesigner/viewAll/${id}`, {
+          headers: {
+            token: token,
+          },
+        });
+
+        const { name, email, phone } = response.data;
+        setName(name);
+        setEmail(email);
+        setPhone(phone);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCourseDesigner();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setIsLoading(true);
 
-    const newTeacher = {
+    const updatedCourseDesigner = {
       name,
       email,
       phone,
-      password,
     };
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:4000/api/teacher/register', newTeacher, {
+      await axios.put(`http://localhost:4000/api/coursedesigner/update/${id}`, updatedCourseDesigner, {
         headers: {
           token: token,
         },
       });
 
       setIsLoading(false);
-      navigate('/teacher');
-      alert('Teacher added successfully!');
+      navigate('/courseDesigner');
+      alert('Course designer updated successfully!');
     } catch (error) {
       setIsLoading(false);
-      if (error.response && error.response.status === 400) {
-        setError('Teacher with the provided email already exists.'); // Set specific error message for duplicate email
-      } else {
-        setError('Error adding teacher. Please try again.'); // Set generic error message
-      }
       console.error(error);
     }
   };
 
   return (
-    <AddTeacherContainer>
+    <UpdateCourseDesignerContainer>
       <TopNavBar />
       <ContentContainer>
         <Typography variant="h5" align="center" gutterBottom style={{ color: '#1e3f66', fontWeight: 'bold', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
-          Add Teacher
+          Update Course Designer
         </Typography>
-        {error && (
-          <Typography variant="body1" align="center" color="error" gutterBottom>
-            {error}
-          </Typography>
-        )}
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -109,9 +119,7 @@ const AddTeacher = () => {
               <FormInput>
                 <TextField
                   id="email"
-                 
-
- label="Email"
+                  label="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -136,33 +144,15 @@ const AddTeacher = () => {
               </FormInput>
             </Grid>
             <Grid item xs={12}>
-              <FormInput>
-                <TextField
-                  id="password"
-                  label="Password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                />
-              </FormInput>
-            </Grid>
-            <Grid item xs={12}>
               <Button variant="contained" color="primary" type="submit" fullWidth style={{ background: '#1e3f66' }} disabled={isLoading}>
-                {isLoading ? 'Adding...' : 'Add Teacher'}
+                {isLoading ? 'Updating...' : 'Update'}
               </Button>
             </Grid>
           </Grid>
         </form>
       </ContentContainer>
-    </AddTeacherContainer>
+    </UpdateCourseDesignerContainer>
   );
 };
 
-export default AddTeacher;
-
-
-
+export default UpdateCourseDesigner;

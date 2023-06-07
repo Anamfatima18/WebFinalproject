@@ -96,6 +96,25 @@ export const viewAllDesigners = async (req, res) => {
       return res.status(500).json({ error: 'Error updating Course Designer' });
     }
   };
+  export const viewDesignerById = async (req, res) => {
+    const { CourseDesignerId } = req.params;
+  
+    try {
+      const designer = await CourseDesigner.findOne({ CourseDesignerId });
+  
+      if (!designer) {
+        return res.status(404).json({ message: 'Designer not found' });
+      }
+  
+      const { name, email, phone, _id } = designer;
+      const designerDetails = { _id, name, email, phone, CourseDesignerId };
+  
+      res.status(200).json(designerDetails);
+    } catch (error) {
+      console.error(error); // Log the error for debugging purposes
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
   
   
   // module.exports = {

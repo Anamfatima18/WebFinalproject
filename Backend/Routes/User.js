@@ -38,7 +38,7 @@ import {registerAdmin,loginAdmin,deleteAdmin,viewAllAdmins} from "../Controllers
 import {registerStudent,deleteStudent,viewAllStudents, updateStudent, viewStudentById} from "../Controllers/StudentController.js";
 //import { registerTeacher } from "../Controllers/TeacherController.js";
 import {registerTeacher,viewAllTeacher,deleteTeacher,updateTeacher, viewTeacherById} from "../Controllers/TeacherController.js";
-import { RegisterCourseDesigner,viewAllDesigners,deleteCourseDesigner, updateCourseDesigner,} from "../Controllers/CourseDesignerController.js";
+import { RegisterCourseDesigner,viewAllDesigners,deleteCourseDesigner, updateCourseDesigner, viewDesignerById} from "../Controllers/CourseDesignerController.js";
 import { authorize } from "../Middleware/auth.js";
 const router = express.Router();
 
@@ -62,7 +62,8 @@ router.get("/teacher/viewAll/:TeacherId", authorize, viewTeacherById);
 
 router.post("/courseDesigner/register", authorize, RegisterCourseDesigner);
 router.get("/courseDesigner/viewAll", authorize, viewAllDesigners);
-router.delete("/courseDesigner/delete", authorize, deleteCourseDesigner);
+router.delete("/courseDesigner/delete/:CourseDesignerId", authorize, deleteCourseDesigner);
 router.put("/courseDesigner/update/:CourseDesignerId", authorize, updateCourseDesigner);
+router.get("/courseDesigner/viewAll/:CourseDesignerId", authorize, viewDesignerById);
 
 export default router;
